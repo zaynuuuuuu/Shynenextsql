@@ -136,7 +136,10 @@ export default function AdminServices() {
               <Field label="Price ($)" type="number" value={form.price} onChange={(v) => setForm({ ...form, price: v })} required />
               <Field label="Duration (min)" type="number" value={form.durationMinutes} onChange={(v) => setForm({ ...form, durationMinutes: v })} required />
             </div>
+<<<<<<< HEAD
             <Field label="Image URL" value={form.imageUrl} onChange={(v) => setForm({ ...form, imageUrl: v })} />
+=======
+>>>>>>> aa2c114 (Initial commit)
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />
               Active (bookable by customers)

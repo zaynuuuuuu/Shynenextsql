@@ -58,11 +58,19 @@ CREATE TABLE IF NOT EXISTS bookings (
   status ENUM('confirmed', 'completed', 'cancelled', 'no-show') NOT NULL DEFAULT 'confirmed',
   notes TEXT NULL,
   createdByAdmin TINYINT(1) NOT NULL DEFAULT 0,
+<<<<<<< HEAD
   activeSlot VARCHAR(20) AS (IF(status <> 'cancelled', CONCAT(date, ' ', startTime), NULL)) STORED,
   createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY uniq_active_slot (activeSlot),
+=======
+  isLive TINYINT(1) AS (IF(status <> 'cancelled', 1, NULL)) STORED,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uniq_active_slot (date, startTime, isLive),
+>>>>>>> aa2c114 (Initial commit)
   KEY idx_date (date),
   KEY idx_customer (customerId),
   KEY idx_status (status),
@@ -73,9 +81,15 @@ CREATE TABLE IF NOT EXISTS bookings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Demo users (INSERT IGNORE skips any email that already exists)
+<<<<<<< HEAD
 INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Shop Admin', 'admin@shyne.local', '$2a$12$/SPDpmzo5bYpr/BMSUWDs.CbkGZFuIKCuaFh9blhlI0tlymTHola2', '+1 555 0100', 'admin', NULL);
 INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Tom Trader', 'trader@shyne.local', '$2a$12$3mNKN5.zo6t4Ee3BMJQk5.rsST2/YysCPAbrOyC2Zodx/LL.g0xru', '+1 555 0101', 'trader', 'Downtown Motors');
 INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Casey Customer', 'customer@shyne.local', '$2a$12$aHzw1lcB5aYLit24nOb.Wuph6KDJOCDIzj8OFLwo//uCHp1rX6K.e', '+1 555 0102', 'customer', NULL);
+=======
+INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Shop Admin', 'admin@shyne.local', '$2a$12$e9ccZQ/hTtN0NDpPMbiEq.DSCLQQnZyG4.kSP7Gniog3zwvI4nRQ2', '+1 555 0100', 'admin', NULL);
+INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Tom Trader', 'trader@shyne.local', '$2a$12$8C4aOIyzJIer2Y3mstOPY.pHxX4HmAiN.S3MjL7bzVKnbvsbsdM0G', '+1 555 0101', 'trader', 'Downtown Motors');
+INSERT IGNORE INTO users (name, email, password, phone, role, businessName) VALUES ('Casey Customer', 'customer@shyne.local', '$2a$12$vSyLyHINbpB7SggZQkc/MuVGDI27Hbs4kAoGD20N5notYXwNyrSpO', '+1 555 0102', 'customer', NULL);
+>>>>>>> aa2c114 (Initial commit)
 
 -- Sample services (skipped if a service with the same name exists)
 INSERT INTO services (name, description, price, durationMinutes, imageUrl, isActive)

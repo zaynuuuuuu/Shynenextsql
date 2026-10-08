@@ -1,4 +1,5 @@
 'use client';
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import api from '../../../../lib/apiClient';
@@ -259,4 +260,17 @@ export default function BookingFlow() {
       <BookingFlowInner />
     </ProtectedRoute>
   );
+=======
+import { useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+
+// Old per-service booking flow — now handled by the booking form on the home page.
+export default function LegacyBookRedirect() {
+  const { serviceId } = useParams();
+  const router = useRouter();
+  useEffect(() => {
+    router.replace(`/?service=${serviceId}`);
+  }, [serviceId, router]);
+  return null;
+>>>>>>> aa2c114 (Initial commit)
 }

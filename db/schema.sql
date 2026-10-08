@@ -54,11 +54,19 @@ CREATE TABLE IF NOT EXISTS bookings (
   status ENUM('confirmed', 'completed', 'cancelled', 'no-show') NOT NULL DEFAULT 'confirmed',
   notes TEXT NULL,
   createdByAdmin TINYINT(1) NOT NULL DEFAULT 0,
+<<<<<<< HEAD
   activeSlot VARCHAR(20) AS (IF(status <> 'cancelled', CONCAT(date, ' ', startTime), NULL)) STORED,
   createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY uniq_active_slot (activeSlot),
+=======
+  isLive TINYINT(1) AS (IF(status <> 'cancelled', 1, NULL)) STORED,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uniq_active_slot (date, startTime, isLive),
+>>>>>>> aa2c114 (Initial commit)
   KEY idx_date (date),
   KEY idx_customer (customerId),
   KEY idx_status (status),

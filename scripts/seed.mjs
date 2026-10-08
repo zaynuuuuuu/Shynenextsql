@@ -109,9 +109,21 @@ const run = async () => {
     const dbName = process.env.MYSQL_DATABASE;
     if (!dbName) throw new Error('MYSQL_DATABASE is not set in .env.local');
     const server = await mysql.createConnection(connectionConfig(false));
+<<<<<<< HEAD
     await server.query(
       `CREATE DATABASE IF NOT EXISTS \`${dbName.replace(/`/g, '')}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
     );
+=======
+    try {
+      await server.query(
+        `CREATE DATABASE IF NOT EXISTS \`${dbName.replace(/`/g, '')}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
+      );
+    } catch (err) {
+      // Shared hosts (Hostinger, cPanel) create the database in their panel and don't
+      // let the DB user run CREATE DATABASE — fine, as long as it already exists.
+      if (!['ER_DBACCESS_DENIED_ERROR', 'ER_SPECIFIC_ACCESS_DENIED_ERROR', 'ER_ACCESS_DENIED_ERROR'].includes(err.code)) throw err;
+    }
+>>>>>>> aa2c114 (Initial commit)
     await server.end();
   }
 
